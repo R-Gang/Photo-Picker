@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        tools:context=".activity.PhotoPickerActivity">
+
+        <FrameLayout
+            android:id="@+id/flTitleBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.gang.library.ui.widget.BaseTitleBar
+                android:id="@+id/mTitleBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                viewRadius="@{50}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/margin_size_50"
+                android:background="@color/color_6c9ffc"
+                android:paddingStart="@dimen/margin_size_10"
+                android:paddingTop="@dimen/margin_size_3"
+                android:paddingEnd="@dimen/margin_size_10"
+                android:paddingBottom="@dimen/margin_size_3">
+
+                <TextView
+                    android:id="@+id/mTitleTv"
+                    style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxEms="7"
+                    android:paddingEnd="@dimen/margin_size_4"
+                    android:singleLine="true"
+                    android:text="@string/string_pp_all_image"
+                    android:textColor="@color/c282828"
+                    android:textSize="@dimen/text_size_18" />
+
+                <ImageView
+                    android:id="@+id/mArrowIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/mTitleTv"
+                    android:src="@mipmap/pp_ic_arrow_down" />
+
+            </RelativeLayout>
+        </FrameLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mContentRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_size_5"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:listitem="item"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/flTitleBar"
+            tools:itemCount="5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,64 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'// 注解的插件，添加此组件使用@Bindable注解
+}
+
+android {
+    compileSdk Android.compileSdkVersion
+
+    defaultConfig {
+        applicationId App.applicationId
+        minSdk Android.minSdkVersion
+        targetSdk Android.targetSdkVersion
+        versionCode Android.versionCode
+        versionName Android.versionName
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            zipAlignEnabled true  //压缩优化
+
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11
+    }
+
+
+    buildFeatures {
+        dataBinding = true
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation Dependencies.androidx_multidex
+
+    implementation Support.appcompat
+    implementation Support.constraintlayout
+
+    testImplementation Support.junit
+    androidTestImplementation Support.junit_ext
+    androidTestImplementation Support.espresso_core
+
+    implementation Support.recyclerview
+
+    implementation Dependencies.toolsUtils
+    implementation Dependencies.RecyclerCommon
+    implementation Dependencies.AndroidCommon
+
+    // 图片选择器
+    implementation project(path: ':PhotoPicker')
+
+}

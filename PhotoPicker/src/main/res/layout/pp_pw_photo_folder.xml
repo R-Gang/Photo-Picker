@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_photo_folder_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_size_12"
+    android:paddingRight="@dimen/margin_size_12"
+    android:paddingBottom="150dp">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_photo_folder_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pp_shape_photo_folder_pw_bg"
+        android:overScrollMode="never"
+        android:paddingBottom="@dimen/margin_size_4"
+        android:scrollbars="none" />
+</LinearLayout>

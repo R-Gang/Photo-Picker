@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 图片处于选中状态时的遮罩层颜色 -->
+    <color name="color_4d000000">#4D000000</color>
+    <!-- 图片条目背景色 -->
+    <color name="color_303d42">#303d42</color>
+    <!-- 文件夹中照片数量颜色 -->
+    <color name="color_585858">#585858</color>
+    <color name="color_6c9ffc">#4d6C9FFC</color>
+    <color name="color_71ce7e">#71CE7E</color>
+
+    <!-- 数据加载对话框加载进度条的颜色 -->
+    <color name="bga_pp_loading_progress_startColor">@android:color/white</color>
+    <color name="bga_pp_loading_progress_centerColor">#17C7D1</color>
+    <color name="bga_pp_loading_progress_endColor">#CC17C7D1</color>
+</resources>

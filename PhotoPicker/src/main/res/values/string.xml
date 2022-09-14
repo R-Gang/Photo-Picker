@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="string_pp_all_image">所以图片</string>
+    <string name="string_pp_take_picture">拍摄照片</string>
+    <string name="string_pp_not_support_crop">当前设备不支持裁剪图片</string>
+    <string name="string_pp_not_support_take_photo">当前设备不支持拍照</string>
+    <string name="string_permission_camear">图片选择需要以下权限:\n\n1.访问设备上的照片\n\n2.拍照</string>
+
+</resources>

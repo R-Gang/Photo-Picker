@@ -1,0 +1,3 @@
+rootProject.name = "Photo-Picker"
+include ':app',
+        ':PhotoPicker'  // 图片选择

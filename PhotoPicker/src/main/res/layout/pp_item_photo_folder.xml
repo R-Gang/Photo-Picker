@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/pp_selector_item_folder"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_size_8">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_item_photo_folder_photo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="@dimen/margin_size_8"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/pp_ic_holder_light" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_item_photo_folder_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/c282828"
+            android:textSize="@dimen/text_size_16"
+            tools:text="文件夹名称" />
+
+        <TextView
+            android:id="@+id/tv_item_photo_folder_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_size_8"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/color_585858"
+            android:textSize="@dimen/text_size_16"
+            tools:text="168" />
+    </LinearLayout>
+</LinearLayout>
