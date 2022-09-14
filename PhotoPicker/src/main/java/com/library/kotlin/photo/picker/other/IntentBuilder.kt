@@ -17,10 +17,15 @@ const val EXTRA_SELECTED_PHOTOS = "EXTRA_SELECTED_PHOTOS"
 const val EXTRA_MAX_CHOOSE_COUNT = "EXTRA_MAX_CHOOSE_COUNT"
 const val EXTRA_PAUSE_ON_SCROLL = "EXTRA_PAUSE_ON_SCROLL"
 const val STATE_SELECTED_PHOTOS = "STATE_SELECTED_PHOTOS"
-const val EXTRA_CROP_FILE_DIR = "EXTRA_CROP_FILE_DIR"
-
 const val EXTRA_CURRENT_POSITION = "EXTRA_CURRENT_POSITION"
+const val EXTRA_CROP_FILE_DIR = "EXTRA_CROP_FILE_DIR"
+/*const val EXTRA_CROP_WIDTH = "EXTRA_CROP_WIDTH"
+const val EXTRA_CROP_HEIGHT = "EXTRA_CROP_HEIGHT"*/
+const val EXTRA_CROP_ASPECTX = "EXTRA_CROP_ASPECTX"
+const val EXTRA_CROP_ASPECTY = "EXTRA_CROP_ASPECTY"
+
 const val EXTRA_IS_FROM_TAKE_PHOTO = "EXTRA_IS_FROM_TAKE_PHOTO"
+const val EXTRA_IS_CIRCLE_CROP_TAKE_PHOTO = "EXTRA_IS_CIRCLE_CROP_TAKE_PHOTO"
 
 
 /**
@@ -127,11 +132,56 @@ class IntentBuilder(context: Context?) {
     }
 
     /**
+     * 裁剪的宽
+     *//*
+    fun cropWidth(cropWidth: Int): IntentBuilder {
+        mIntent.putExtra(EXTRA_CROP_WIDTH,
+            cropWidth)
+        return this
+    }
+
+    *//**
+     * 裁剪的高
+     *//*
+    fun cropHeight(cropHeight: Int): IntentBuilder {
+        mIntent.putExtra(EXTRA_CROP_HEIGHT,
+            cropHeight)
+        return this
+    }*/
+
+    /**
+     * 裁剪的宽比
+     */
+    fun cropAspectX(cropWidth: Int): IntentBuilder {
+        mIntent.putExtra(EXTRA_CROP_ASPECTX,
+            cropWidth)
+        return this
+    }
+
+    /**
+     * 裁剪的高比
+     */
+    fun cropAspectY(cropHeight: Int): IntentBuilder {
+        mIntent.putExtra(EXTRA_CROP_ASPECTY,
+            cropHeight)
+        return this
+    }
+
+    /**
      * 是否是拍完照后跳转过来
      */
     fun isFromTakePhoto(isFromTakePhoto: Boolean): IntentBuilder {
         mIntent.putExtra(EXTRA_IS_FROM_TAKE_PHOTO,
             isFromTakePhoto)
+        return this
+    }
+
+    /**
+     * 是否是圆形裁剪
+     */
+    fun isCircleCrop(isCircleCrop: Boolean): IntentBuilder {
+        mIntent.putExtra(EXTRA_IS_CIRCLE_CROP_TAKE_PHOTO,
+            isCircleCrop)
         return this
     }
 

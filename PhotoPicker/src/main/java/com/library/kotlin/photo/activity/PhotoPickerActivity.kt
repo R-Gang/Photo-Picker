@@ -54,6 +54,22 @@ open class PhotoPickerActivity : BaseVBActivity<ActivityPhotoPickerBinding>(),
      */
     var mMaxChooseCount = 1
 
+    /**
+     * 裁剪的宽高
+     *//*
+    var cropWidth: Int = 300
+    var cropHeight: Int = 300*/
+
+    /**
+     * 裁剪的宽高比
+     */
+    var cropAspectX: Int = 1
+    var cropAspectY: Int = 1
+
+    /**
+     * 圆形裁剪
+     */
+    var isCircleCrop: Boolean = false
 
     /**
      * 图片目录数据集合
@@ -79,13 +95,17 @@ open class PhotoPickerActivity : BaseVBActivity<ActivityPhotoPickerBinding>(),
                 mTitleTv.text = mCurrentPhotoFolderModel?.name
             }
 
-            processLogic()
-
         }
     }
 
     override fun initData() {
+        isCircleCrop = intent.getBooleanExtra(EXTRA_IS_CIRCLE_CROP_TAKE_PHOTO, false)
+        /*cropWidth = intent.getIntExtra(EXTRA_CROP_WIDTH, 300)
+        cropHeight = intent.getIntExtra(EXTRA_CROP_HEIGHT, 300)*/
+        cropAspectX = intent.getIntExtra(EXTRA_CROP_ASPECTX, 1)
+        cropAspectY = intent.getIntExtra(EXTRA_CROP_ASPECTY, 1)
 
+        processLogic()
     }
 
     protected fun processLogic() {
@@ -179,7 +199,7 @@ open class PhotoPickerActivity : BaseVBActivity<ActivityPhotoPickerBinding>(),
                 }*/
                 val cameraPath = mPhotoHelper?.cameraFilePath
                 LogUtils.d(TAG, "拍照图片路径$cameraPath")
-                cropPhoto(cameraPath)
+                cropPhoto(cameraPath, false)
             } else if (requestCode == REQUEST_CODE_CROP) {
                 data?.apply {
                     val cropPath = mPhotoHelper?.cropFilePath
@@ -218,7 +238,7 @@ open class PhotoPickerActivity : BaseVBActivity<ActivityPhotoPickerBinding>(),
             val selectedPhoto = mCurrentPhotoFolderModel?.photos?.get(position)
             LogUtils.d(TAG, "选中图片路径$selectedPhoto")
             if (mCropPhotoEnabled) {
-                cropPhoto(selectedPhoto)
+                cropPhoto(selectedPhoto, true)
             } else {
                 returnSelectedPhotos(arrayListOf(selectedPhoto))
             }
@@ -253,12 +273,17 @@ open class PhotoPickerActivity : BaseVBActivity<ActivityPhotoPickerBinding>(),
     /**
      * 裁剪
      */
-    private fun cropPhoto(selectedPhoto: String?) {
+    private fun cropPhoto(selectedPhoto: String?, flag: Boolean) {
         try {
             startActivityForResult(mPhotoHelper?.getCropIntent(
                 inputFilePath = selectedPhoto,
-                width = 300,
-                height = 300),
+                flag = flag,
+                isCircle = isCircleCrop,
+                /*width = cropWidth,
+                height = cropHeight,*/
+                aspectX = cropAspectX,
+                aspectY = cropAspectY,
+            ),
                 REQUEST_CODE_CROP)
         } catch (e: Exception) {
             mPhotoHelper?.deleteCameraFile()

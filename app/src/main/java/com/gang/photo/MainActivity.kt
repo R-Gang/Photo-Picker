@@ -61,23 +61,23 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>() {
     }
 
     fun pickerTakePhoto(
-        maxChooseCoun: Int = 1,
-        isForResult: Boolean = true,
-    ) {
-        //toPickerTakePhoto(this@MainActivity)
-        toPickerTakePhoto(this@MainActivity,
-            isCallResult = true) { requestCode: Int, perms: String ->
-            val photoPickerIntent: Intent = IntentBuilder(this)
-                .cameraFileDir(takePhotoDir()) // 是否开启拍照
-                .maxChooseCount(maxChooseCoun) // 图片选择张数的最大值
-                .cropFileDir(cropPhotoDir()) // 是否开启裁剪
-                .build()
-            if (isForResult) {
-                startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
-            } else {
-                startActivity(photoPickerIntent)
+            maxChooseCoun: Int = 1,
+            isForResult: Boolean = true,
+        ) {
+            //toPickerTakePhoto(this@MainActivity)
+            toPickerTakePhoto(this@MainActivity,
+                isCallResult = true) { requestCode: Int, perms: String ->
+                val photoPickerIntent: Intent = IntentBuilder(this)
+                    .cameraFileDir(takePhotoDir()) // 是否开启拍照
+                    .maxChooseCount(maxChooseCoun) // 图片选择张数的最大值
+                    .cropFileDir(cropPhotoDir()) // 是否开启裁剪
+                    .build()
+                if (isForResult) {
+                    startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
+                } else {
+                    startActivity(photoPickerIntent)
+                }
             }
-        }
     }
 
 }

@@ -156,8 +156,8 @@ class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: F
         isScale: Boolean = false,
         returnData: Boolean = false,
         noFaceDetection: Boolean = true,
-        width: Int,
-        height: Int,
+        /*width: Int,
+        height: Int,*/
         aspectX: Int = 1,
         aspectY: Int = 1,
     ): Intent {
@@ -184,15 +184,15 @@ class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: F
         // aspectX aspectY 是宽高的比例
         intent.putExtra("aspectX", aspectX)
         intent.putExtra("aspectY", aspectY)
-        // outputX outputY 是裁剪图片宽高
-        intent.putExtra("outputX", width)
-        intent.putExtra("outputY", height)
+        // outputX outputY 是裁剪图片宽高 android 11以上需要注调
+        /*intent.putExtra("outputX", width)
+        intent.putExtra("outputY", height)*/
         intent.putExtra("circleCrop", isCircle) // 圆形裁剪
         intent.putExtra("scale", isScale)  // 缩放
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cropUri) // 裁剪输出的Uri
-        intent.putExtra("return-data", returnData)
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
-        intent.putExtra("noFaceDetection", noFaceDetection)
+        intent.putExtra("return-data", returnData) //是否把剪切后的图片通过data返回
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString()) // 图片格式
+        intent.putExtra("noFaceDetection", noFaceDetection) // 取消人脸识别
 
         mPhotoContext?.apply {
             //重要！！！添加权限，不然裁剪完后报 “保存时发生错误，保存失败” （我的小米10.0系统是这样）

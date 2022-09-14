@@ -63,6 +63,8 @@ object Dependencies {
     const val coil = "io.coil-kt:coil:2.2.0" // Coil图片加载框架
     const val Imageloader = "com.github.R-Gang:Image-loader:v1.0.0-beta.0" // Coil扩展工具
 
+    const val PhotoPicker = "com.github.R-Gang:Photo-Picker:v1.0.0-beta" // 图片选择器
+
     const val logger = "com.orhanobut:logger:2.2.0" // 日志工具类 logger
 
     val addRepos: (handler: RepositoryHandler) -> Unit = {
