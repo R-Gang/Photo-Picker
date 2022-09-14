@@ -64,6 +64,7 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>() {
         maxChooseCoun: Int = 1,
         isForResult: Boolean = true,
     ) {
+        //toPickerTakePhoto(this@MainActivity)
         toPickerTakePhoto(this@MainActivity,
             isCallResult = true) { requestCode: Int, perms: String ->
             val photoPickerIntent: Intent = IntentBuilder(this)

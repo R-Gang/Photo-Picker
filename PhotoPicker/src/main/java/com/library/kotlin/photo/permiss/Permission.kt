@@ -29,9 +29,8 @@ const val RC_DATA_FOR_DIR = 3
 fun Activity.toPickerTakePhoto(
     context: Context,
     maxChooseCoun: Int = 1,
-    isForResult: Boolean = false,
     isCallResult: Boolean = false,
-    action: (requestCode: Int, perms: String) -> Unit,
+    action: ((requestCode: Int, perms: String) -> Unit)? = null,
 ) {
     (this as BasePermissionActivity).requestPermission(Config.REQUEST_CAMERA,
         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -47,18 +46,14 @@ fun Activity.toPickerTakePhoto(
                     "onPermissionGrantedM", Thread.currentThread().name,
                 )
                 if (isCallResult) {
-                    action.invoke(requestCode, perms.toString())
+                    action?.invoke(requestCode, perms.toString())
                 } else {
                     val photoPickerIntent: Intent = IntentBuilder(this@toPickerTakePhoto)
                         .cameraFileDir(takePhotoDir()) // 是否开启拍照
                         .maxChooseCount(maxChooseCoun) // 图片选择张数的最大值
                         .cropFileDir(cropPhotoDir()) // 是否开启裁剪
                         .build()
-                    if (isForResult) {
-                        startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
-                    } else {
-                        startActivity(photoPickerIntent)
-                    }
+                    startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
                 }
             }
 
@@ -74,9 +69,8 @@ fun Activity.toPickerTakePhoto(
 fun Context.toPickerTakePhoto(
     context: Context,
     maxChooseCoun: Int = 1,
-    isForResult: Boolean = false,
     isCallResult: Boolean = false,
-    action: (requestCode: Int, perms: String) -> Unit,
+    action: ((requestCode: Int, perms: String) -> Unit)? = null,
 ) {
     (this as BasePermissionActivity).requestPermission(Config.REQUEST_CAMERA,
         arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -92,18 +86,14 @@ fun Context.toPickerTakePhoto(
                     "onPermissionGrantedM", Thread.currentThread().name,
                 )
                 if (isCallResult) {
-                    action.invoke(requestCode, perms.toString())
+                    action?.invoke(requestCode, perms.toString())
                 } else {
                     val photoPickerIntent: Intent = IntentBuilder(this@toPickerTakePhoto)
                         .cameraFileDir(takePhotoDir()) // 是否开启拍照
                         .maxChooseCount(maxChooseCoun) // 图片选择张数的最大值
                         .cropFileDir(cropPhotoDir()) // 是否开启裁剪
                         .build()
-                    if (isForResult) {
-                        startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
-                    } else {
-                        startActivity(photoPickerIntent)
-                    }
+                    startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
                 }
             }
 

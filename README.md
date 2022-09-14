@@ -2,7 +2,7 @@
 
 [![](https://jitpack.io/v/R-Gang/Photo-Picker.svg)](https://jitpack.io/#R-Gang/Photo-Picker)
 
-Android 图片选择、九宫格图片控件
+Android 图片选择、系统拍照、系统裁剪、九宫格图片控件
 
 ![photo_single1.jpg](https://github.com/R-Gang/Photo-Picker/blob/master/images/photo_single1.jpg)
 ![photo_choose.jpg](https://github.com/R-Gang/Photo-Picker/blob/master/images/photo_choose.jpg)
@@ -13,39 +13,45 @@ Android 图片选择、九宫格图片控件
 
 ```
     initPhotoPicker(this)
+    
+    initLogger(ToolsConfig.isShowLog)
+    LayoutManager.instance?.init(this)
 ```
 
 ### 打开图片选择
 
 ```
-    fun toPickerTakePhoto(context: Context, maxChooseCoun: Int = 1) {
-        (context as BasePermissionActivity).requestPermission(Config.REQUEST_CAMERA,
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA),
-            context.getString(R.string.string_permission_camear),
-            object : PermissionCallBackM {
-                override fun onPermissionGrantedM(
-                    requestCode: Int,
-                    vararg perms: String?,
-                ) {
-                    LogUtils.e(
-                        "onPermissionGrantedM", Thread.currentThread().name,
-                    )
-                    val photoPickerIntent: Intent = IntentBuilder(context)
-                        // 拍照后照片的存放目录，如果不传递该参数的话则不开启图库里的拍照功能。
-                        .cameraFileDir(takePhotoDir())
-                        .maxChooseCount(maxChooseCoun) // 图片选择张数的最大值
-                        .build()
-                    context.startActivity(photoPickerIntent)
-    
-                }
-    
-                override fun onPermissionDeniedM(
-                    requestCode: Int,
-                    vararg perms: String?,
-                ) {
-                    LogUtils.e(context.toString(), "TODO: INTERNET Denied")
-                }
-            })
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            if (requestCode == RC_CHOOSE_PHOTO) {
+                val uri = data?.data
+                LogUtils.d(TAG, "选择图片路径$uri")
+                val bitmap = Images.Media.getBitmap(contentResolver, uri)
+                mBinding?.ivAvatar?.setImageBitmap(bitmap)
+            }
+        }
+    }
+
+    fun pickerTakePhoto(
+        maxChooseCoun: Int = 1,
+        isForResult: Boolean = true,
+    ) {
+        //toPickerTakePhoto(this@MainActivity)
+        toPickerTakePhoto(this@MainActivity,
+            isCallResult = true) { requestCode: Int, perms: String ->
+            val photoPickerIntent: Intent = IntentBuilder(this)
+                .cameraFileDir(takePhotoDir()) // 是否开启拍照
+                .maxChooseCount(maxChooseCoun) // 图片选择张数的最大值
+                .cropFileDir(cropPhotoDir()) // 是否开启裁剪
+                .build()
+            if (isForResult) {
+                startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
+            } else {
+                startActivity(photoPickerIntent)
+            }
+        }
+    }
 ```
 
 ## Reference

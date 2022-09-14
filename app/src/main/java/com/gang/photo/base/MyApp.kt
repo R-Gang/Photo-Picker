@@ -1,11 +1,8 @@
 package com.gang.photo.base
 
-import androidx.appcompat.app.AppCompatDialog
 import com.gang.library.BaseApp
-import com.gang.library.common.user.Config
 import com.gang.recycler.kotlin.manager.LayoutManager
 import com.gang.tools.kotlin.ToolsConfig
-import com.gang.tools.kotlin.utils.initToolsUtils
 import com.library.kotlin.photo.initPhotoPicker
 
 /**
@@ -22,8 +19,8 @@ class MyApp : BaseApp() {
 
         ToolsConfig.isShowLog = true
 
-        initLogger(ToolsConfig.isShowLog)
         initPhotoPicker(this)
+        initLogger(ToolsConfig.isShowLog)
         LayoutManager.instance?.init(this)
     }
 }
