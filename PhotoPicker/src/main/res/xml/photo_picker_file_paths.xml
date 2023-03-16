@@ -2,6 +2,6 @@
 <paths>
     <!-- 从相册选择图片裁剪时，不确定用户选择图片的路径，所以这里设置根目录 -->
     <root-path
-        name="gang_photo_picker_root"
+        name="photo_picker"
         path="." />
 </paths>

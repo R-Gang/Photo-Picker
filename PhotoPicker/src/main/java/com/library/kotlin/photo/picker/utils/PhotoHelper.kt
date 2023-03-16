@@ -237,8 +237,7 @@ open class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileD
         fun createFileUri(file: File?): Uri? {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
                 mPhotoContext?.apply {
-                    val authority: String =
-                        applicationInfo?.packageName + ".gang_photo_picker.file_provider"
+                    val authority: String = applicationInfo?.packageName + ".file_provider"
                     return file?.let { FileProvider.getUriForFile(this, authority, it) }
                 }
             }

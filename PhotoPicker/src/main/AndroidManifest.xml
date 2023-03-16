@@ -29,7 +29,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.gang_photo_picker.file_provider"
+            android:authorities="${applicationId}.file_provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
