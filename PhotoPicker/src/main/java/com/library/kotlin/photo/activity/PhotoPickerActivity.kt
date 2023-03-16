@@ -56,9 +56,9 @@ open class PhotoPickerActivity : BaseVBActivity<ActivityPhotoPickerBinding>(),
 
     /**
      * 裁剪的宽高
-     *//*
+     */
     var cropWidth: Int = 300
-    var cropHeight: Int = 300*/
+    var cropHeight: Int = 300
 
     /**
      * 裁剪的宽高比
@@ -100,8 +100,8 @@ open class PhotoPickerActivity : BaseVBActivity<ActivityPhotoPickerBinding>(),
 
     override fun initData() {
         isCircleCrop = intent.getBooleanExtra(EXTRA_IS_CIRCLE_CROP_TAKE_PHOTO, false)
-        /*cropWidth = intent.getIntExtra(EXTRA_CROP_WIDTH, 300)
-        cropHeight = intent.getIntExtra(EXTRA_CROP_HEIGHT, 300)*/
+        cropWidth = intent.getIntExtra(EXTRA_CROP_WIDTH, 300)
+        cropHeight = intent.getIntExtra(EXTRA_CROP_HEIGHT, 300)
         cropAspectX = intent.getIntExtra(EXTRA_CROP_ASPECTX, 1)
         cropAspectY = intent.getIntExtra(EXTRA_CROP_ASPECTY, 1)
 
@@ -129,16 +129,21 @@ open class PhotoPickerActivity : BaseVBActivity<ActivityPhotoPickerBinding>(),
             mMaxChooseCount = 1
         }
 
-        mPicAdapter = PhotoPickerAdapter(arrayListOf(),
-            this, this@PhotoPickerActivity)
+        mPicAdapter = PhotoPickerAdapter(
+            arrayListOf(),
+            this, this@PhotoPickerActivity
+        )
         mBinding?.mContentRv?.apply {
             LayoutManager.instance?.initRecyclerGrid(this, SPAN_COUNT)
             val itemDecoration = SpaceItemDecoration(2, SpaceItemDecoration.GRIDLAYOUT)
             addItemDecoration(itemDecoration)
             adapter = mPicAdapter
             if (intent.getBooleanExtra(EXTRA_PAUSE_ON_SCROLL, false)) {
-                addOnScrollListener(RVOnScrollListener(
-                    this@PhotoPickerActivity))
+                addOnScrollListener(
+                    RVOnScrollListener(
+                        this@PhotoPickerActivity
+                    )
+                )
             }
         }
     }
@@ -275,16 +280,18 @@ open class PhotoPickerActivity : BaseVBActivity<ActivityPhotoPickerBinding>(),
      */
     private fun cropPhoto(selectedPhoto: String?, flag: Boolean) {
         try {
-            startActivityForResult(mPhotoHelper?.getCropIntent(
-                inputFilePath = selectedPhoto,
-                flag = flag,
-                isCircle = isCircleCrop,
-                /*width = cropWidth,
-                height = cropHeight,*/
-                aspectX = cropAspectX,
-                aspectY = cropAspectY,
-            ),
-                REQUEST_CODE_CROP)
+            startActivityForResult(
+                mPhotoHelper?.getCropIntent(
+                    inputFilePath = selectedPhoto,
+                    flag = flag,
+                    isCircle = isCircleCrop,
+                    width = cropWidth,
+                    height = cropHeight,
+                    aspectX = cropAspectX,
+                    aspectY = cropAspectY,
+                ),
+                REQUEST_CODE_CROP
+            )
         } catch (e: Exception) {
             mPhotoHelper?.deleteCameraFile()
             mPhotoHelper?.deleteCropFile()

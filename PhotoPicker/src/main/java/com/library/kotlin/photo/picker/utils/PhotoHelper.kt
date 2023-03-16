@@ -3,6 +3,7 @@ package com.library.kotlin.photo.picker.utils
 import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
@@ -11,7 +12,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.text.TextUtils
+import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import com.gang.tools.kotlin.utils.LogUtils
 import com.library.kotlin.photo.mPhotoContext
@@ -27,7 +30,7 @@ import java.util.*
  * @ClassName:      PhotoHelper
  * @Description:    类作用描述
  */
-class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: File?) {
+open class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: File?) {
 
     var cameraFilePath: String? = null
         private set
@@ -43,11 +46,12 @@ class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: F
      * @throws IOException
      */
     @Throws(IOException::class)
-    private fun createCameraFile(): File {
+    fun createCameraFile(): File {
         val captureFile = File.createTempFile(
             "Capture_" + PHOTO_NAME_POSTFIX_SDF.format(Date()),
             ".jpg",
-            mCameraFileDir)
+            mCameraFileDir
+        )
         cameraFilePath = captureFile.absolutePath
         return captureFile
     }
@@ -59,11 +63,12 @@ class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: F
      * @throws IOException
      */
     @Throws(IOException::class)
-    private fun createCropFile(): File {
+    fun createCropFile(): File {
         val cropFile = File.createTempFile(
             "Crop_" + PHOTO_NAME_POSTFIX_SDF.format(Date()),
             ".jpg",
-            mCropFileDir)
+            mCropFileDir
+        )
         cropFilePath = cropFile.absolutePath
         return cropFile
     }
@@ -156,8 +161,9 @@ class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: F
         isScale: Boolean = false,
         returnData: Boolean = false,
         noFaceDetection: Boolean = true,
-        /*width: Int,
-        height: Int,*/
+        isOutPutXY: Boolean = false,
+        width: Int = 0,
+        height: Int = 0,
         aspectX: Int = 1,
         aspectY: Int = 1,
     ): Intent {
@@ -184,9 +190,11 @@ class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: F
         // aspectX aspectY 是宽高的比例
         intent.putExtra("aspectX", aspectX)
         intent.putExtra("aspectY", aspectY)
-        // outputX outputY 是裁剪图片宽高 android 11以上需要注调
-        /*intent.putExtra("outputX", width)
-        intent.putExtra("outputY", height)*/
+        if (isOutPutXY) {
+            // outputX outputY 是裁剪图片宽高 android 11以上需要注调
+            intent.putExtra("outputX", width)
+            intent.putExtra("outputY", height)
+        }
         intent.putExtra("circleCrop", isCircle) // 圆形裁剪
         intent.putExtra("scale", isScale)  // 缩放
         intent.putExtra(MediaStore.EXTRA_OUTPUT, cropUri) // 裁剪输出的Uri
@@ -201,9 +209,11 @@ class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: F
             for (resolveInfo in resInfoList) {
                 //我用的小米手机 packageName 得到的是：com.miui.gallery
                 val packageName = resolveInfo.activityInfo.packageName
-                grantUriPermission(packageName,
+                grantUriPermission(
+                    packageName,
                     cropUri,
-                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
                 //注意不是 getPackageName()！！ getPackageName()得到的是app的包名
                 //grantUriPermission(getPackageName(), cropUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
             }
@@ -247,17 +257,21 @@ class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: F
             }
             val scheme = uri.scheme
             var filePath: String? = null
-            if (TextUtils.isEmpty(scheme) || TextUtils.equals(ContentResolver.SCHEME_FILE,
-                    scheme)
+            if (TextUtils.isEmpty(scheme) || TextUtils.equals(
+                    ContentResolver.SCHEME_FILE,
+                    scheme
+                )
             ) {
                 filePath = uri.path
             } else if (TextUtils.equals(ContentResolver.SCHEME_CONTENT, scheme)) {
                 val filePathColumn = arrayOf(MediaStore.MediaColumns.DATA)
-                val cursor = mPhotoContext?.contentResolver?.query(uri,
+                val cursor = mPhotoContext?.contentResolver?.query(
+                    uri,
                     filePathColumn,
                     null,
                     null,
-                    null)
+                    null
+                )
                 if (cursor != null) {
                     if (cursor.moveToFirst()) {
                         val columnIndex = cursor.getColumnIndex(filePathColumn[0])
@@ -284,6 +298,25 @@ class PhotoHelper(private val mCameraFileDir: File?, private val mCropFileDir: F
                 savedInstanceState.putString(STATE_CROP_FILE_PATH, photoHelper.cropFilePath)
             }
         }
+
+        /**
+         *  Environment.isExternalStorageManager() 判断是否获取
+         *  Android 11访问外部文件，需要另外申请 ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION 权限
+         */
+        val Context.getAppAllFilesPerIntent: Intent
+            @RequiresApi(Build.VERSION_CODES.R)
+            get() {
+                val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                try {
+                    intent.addCategory("android.intent.category.DEFAULT")
+                    intent.data =
+                        Uri.parse(String.format("package:%s", applicationContext.packageName))
+                } catch (e: Exception) {
+                    // ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                    intent.action = Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION
+                }
+                return intent
+            }
     }
 
     /**

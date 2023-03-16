@@ -18,6 +18,19 @@ android {
 
     }
 
+    signingConfigs {
+        configs {
+            keyAlias 'gang'
+            keyPassword 'ruigang'
+            storeFile file('../gang.jks')
+            storePassword 'ruigang'
+
+            // 添加签名信息
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -43,9 +56,10 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation Dependencies.androidx_multidex
+    implementation Support.androidx_multidex
 
     implementation Support.appcompat
+    implementation Support.core_ktx
     implementation Support.constraintlayout
 
     testImplementation Support.junit

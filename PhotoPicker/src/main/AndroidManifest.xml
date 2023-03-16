@@ -21,7 +21,10 @@
     android:preserveLegacyExternalStorage="true"
     android:requestLegacyExternalStorage="true"-->
 
-    <application>
+    <application
+        android:preserveLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
+        tools:targetApi="r">
         <activity android:name=".activity.PhotoPickerActivity" />
 
         <provider

@@ -20,7 +20,7 @@ object App {
 object Android {
     const val kotlin = "1.6.10"
     const val gradle = "7.0.3"
-    const val compileSdkVersion = 32
+    const val compileSdkVersion = 33
     const val minSdkVersion = 26
     const val targetSdkVersion = 32
     const val versionCode = 1
@@ -37,9 +37,13 @@ object Support {
     const val junit_ext = "androidx.test.ext:junit:1.1.2"
     const val espresso_core = "androidx.test.espresso:espresso-core:3.3.0"
 
+    const val androidx_multidex = "androidx.multidex:multidex:2.0.1" // Dex处理
+
+    const val appcompat = "androidx.appcompat:appcompat:1.6.1"
+    const val core_ktx = "androidx.core:core-ktx:1.9.0"
+
     const val documentfile = "androidx.documentfile:documentfile:1.0.1"
     const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.4"
-    const val appcompat = "androidx.appcompat:appcompat:1.5.0"
     const val recyclerview = "androidx.recyclerview:recyclerview:1.2.1@aar" // recyclerview
 
     const val kotlin_stdlib_jdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Android.kotlin}"
@@ -53,17 +57,15 @@ object Support {
  * */
 object Dependencies {
 
-    const val androidx_multidex = "androidx.multidex:multidex:2.0.1" // Dex处理
-
     const val AndroidCommon =
         "com.github.R-Gang:Android-Common:v0.1.6-beta.13.0@aar" // 常用类(以上为基类关联依赖)
-    const val RecyclerCommon = "com.github.R-Gang:Recycler-Common:1.0.0" // 视图列表扩展
+    const val RecyclerCommon = "com.github.R-Gang:Recycler-Common:v0.1.0-beta.0" // 视图列表扩展
     const val OkhttpUtils = "com.github.R-Gang:Okhttp-Utils:v1.0.0-beta.6" // 网络请求框架
-    const val toolsUtils = "com.github.R-Gang:Tools-Utils:v1.0.1-beta.1" // 实用工具类
+    const val toolsUtils = "com.github.R-Gang:Tools-Utils:v1.0.1-beta.3" // 实用工具类
     const val coil = "io.coil-kt:coil:2.2.0" // Coil图片加载框架
     const val Imageloader = "com.github.R-Gang:Image-loader:v1.0.0-beta.0" // Coil扩展工具
 
-    const val PhotoPicker = "com.github.R-Gang:Photo-Picker:v1.0.0-beta" // 图片选择器
+    const val PhotoPicker = "com.github.R-Gang:Photo-Picker:v1.0.0-beta.0" // 图片选择器
 
     const val logger = "com.orhanobut:logger:2.2.0" // 日志工具类 logger
 
@@ -76,7 +78,11 @@ object Dependencies {
         it.maven { url = URI("https://maven.aliyun.com/repository/central") }
         it.maven { url = URI("https://maven.aliyun.com/repository/google") }
         it.maven { url = URI("https://maven.aliyun.com/repository/jcenter") }
-        it.maven { url = URI("https://jitpack.io") }
+        it.maven {
+            url = URI("https://jitpack.io")
+            val authToken = "jp_7hqsbgvlrlh8sua6dainpc08j4"
+            credentials { username = authToken }
+        }
         it.maven { url = URI("https://dl.google.com/dl/android/maven2/") }
         it.maven { url = URI("https://maven.youzanyun.com/repository/maven-releases") }
         it.maven { url = URI("https://maven.google.com") }

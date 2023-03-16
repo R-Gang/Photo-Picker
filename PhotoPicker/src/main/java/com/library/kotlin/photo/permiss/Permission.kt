@@ -32,10 +32,13 @@ fun Activity.toPickerTakePhoto(
     isCallResult: Boolean = false,
     action: ((requestCode: Int, perms: String) -> Unit)? = null,
 ) {
+
     (this as BasePermissionActivity).requestPermission(Config.REQUEST_CAMERA,
-        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
+        arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA),
+            Manifest.permission.CAMERA
+        ),
         context.getString(R.string.string_permission_camear),
         object : PermissionCallBackM {
             override fun onPermissionGrantedM(
@@ -66,6 +69,7 @@ fun Activity.toPickerTakePhoto(
         })
 }
 
+
 fun Context.toPickerTakePhoto(
     context: Context,
     maxChooseCoun: Int = 1,
@@ -73,9 +77,11 @@ fun Context.toPickerTakePhoto(
     action: ((requestCode: Int, perms: String) -> Unit)? = null,
 ) {
     (this as BasePermissionActivity).requestPermission(Config.REQUEST_CAMERA,
-        arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
+        arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.CAMERA),
+            Manifest.permission.CAMERA
+        ),
         context.getString(R.string.string_permission_camear),
         object : PermissionCallBackM {
             override fun onPermissionGrantedM(

@@ -19,8 +19,9 @@ const val EXTRA_PAUSE_ON_SCROLL = "EXTRA_PAUSE_ON_SCROLL"
 const val STATE_SELECTED_PHOTOS = "STATE_SELECTED_PHOTOS"
 const val EXTRA_CURRENT_POSITION = "EXTRA_CURRENT_POSITION"
 const val EXTRA_CROP_FILE_DIR = "EXTRA_CROP_FILE_DIR"
-/*const val EXTRA_CROP_WIDTH = "EXTRA_CROP_WIDTH"
-const val EXTRA_CROP_HEIGHT = "EXTRA_CROP_HEIGHT"*/
+
+const val EXTRA_CROP_WIDTH = "EXTRA_CROP_WIDTH"
+const val EXTRA_CROP_HEIGHT = "EXTRA_CROP_HEIGHT"
 const val EXTRA_CROP_ASPECTX = "EXTRA_CROP_ASPECTX"
 const val EXTRA_CROP_ASPECTY = "EXTRA_CROP_ASPECTY"
 
@@ -79,8 +80,10 @@ fun putSelectedPhotos(outState: Bundle, selectedPhotos: ArrayList<String>?) {
  * @return
  */
 fun getIsFromTakePhoto(intent: Intent): Boolean {
-    return intent.getBooleanExtra(EXTRA_IS_FROM_TAKE_PHOTO,
-        false)
+    return intent.getBooleanExtra(
+        EXTRA_IS_FROM_TAKE_PHOTO,
+        false
+    )
 }
 
 
@@ -126,35 +129,43 @@ class IntentBuilder(context: Context?) {
      * 当前预览图片的索引
      */
     fun currentPosition(currentPosition: Int): IntentBuilder {
-        mIntent.putExtra(EXTRA_CURRENT_POSITION,
-            currentPosition)
+        mIntent.putExtra(
+            EXTRA_CURRENT_POSITION,
+            currentPosition
+        )
         return this
     }
 
     /**
      * 裁剪的宽
-     *//*
+     */
     fun cropWidth(cropWidth: Int): IntentBuilder {
-        mIntent.putExtra(EXTRA_CROP_WIDTH,
-            cropWidth)
+        mIntent.putExtra(
+            EXTRA_CROP_WIDTH,
+            cropWidth
+        )
         return this
     }
 
-    *//**
+    /**
      * 裁剪的高
-     *//*
+     */
     fun cropHeight(cropHeight: Int): IntentBuilder {
-        mIntent.putExtra(EXTRA_CROP_HEIGHT,
-            cropHeight)
+        mIntent.putExtra(
+            EXTRA_CROP_HEIGHT,
+            cropHeight
+        )
         return this
-    }*/
+    }
 
     /**
      * 裁剪的宽比
      */
     fun cropAspectX(cropWidth: Int): IntentBuilder {
-        mIntent.putExtra(EXTRA_CROP_ASPECTX,
-            cropWidth)
+        mIntent.putExtra(
+            EXTRA_CROP_ASPECTX,
+            cropWidth
+        )
         return this
     }
 
@@ -162,8 +173,10 @@ class IntentBuilder(context: Context?) {
      * 裁剪的高比
      */
     fun cropAspectY(cropHeight: Int): IntentBuilder {
-        mIntent.putExtra(EXTRA_CROP_ASPECTY,
-            cropHeight)
+        mIntent.putExtra(
+            EXTRA_CROP_ASPECTY,
+            cropHeight
+        )
         return this
     }
 
@@ -171,8 +184,10 @@ class IntentBuilder(context: Context?) {
      * 是否是拍完照后跳转过来
      */
     fun isFromTakePhoto(isFromTakePhoto: Boolean): IntentBuilder {
-        mIntent.putExtra(EXTRA_IS_FROM_TAKE_PHOTO,
-            isFromTakePhoto)
+        mIntent.putExtra(
+            EXTRA_IS_FROM_TAKE_PHOTO,
+            isFromTakePhoto
+        )
         return this
     }
 
@@ -180,8 +195,10 @@ class IntentBuilder(context: Context?) {
      * 是否是圆形裁剪
      */
     fun isCircleCrop(isCircleCrop: Boolean): IntentBuilder {
-        mIntent.putExtra(EXTRA_IS_CIRCLE_CROP_TAKE_PHOTO,
-            isCircleCrop)
+        mIntent.putExtra(
+            EXTRA_IS_CIRCLE_CROP_TAKE_PHOTO,
+            isCircleCrop
+        )
         return this
     }
 
@@ -204,8 +221,10 @@ class IntentBuilder(context: Context?) {
 
 // 拍照后照片的存放目录，如果不传递该参数的话就没有拍照功能。
 fun takePhotoDir(): File {
-    return File(Environment.getExternalStorageDirectory(),
-        "GANGPhotoPicker") // /storage/emulated/0/GANGPhotoPicker 目录
+    return File(
+        Environment.getExternalStorageDirectory(),
+        "GANGPhotoPicker"
+    ) // /storage/emulated/0/GANGPhotoPicker 目录
 }
 
 // 裁剪后照片的存放目录，如果不传递该参数的话就没有裁剪功能。

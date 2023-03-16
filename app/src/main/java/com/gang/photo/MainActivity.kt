@@ -5,7 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore.Images
-import android.provider.Settings
 import com.gang.library.base.BaseVBActivity
 import com.gang.photo.databinding.ActivityMainBinding
 import com.gang.tools.kotlin.utils.LogUtils
@@ -16,6 +15,7 @@ import com.library.kotlin.photo.picker.other.IntentBuilder
 import com.library.kotlin.photo.picker.other.cropPhotoDir
 import com.library.kotlin.photo.picker.other.takePhotoDir
 import com.library.kotlin.photo.picker.toPickerTakePhoto
+import com.library.kotlin.photo.picker.utils.PhotoHelper.Companion.getAppAllFilesPerIntent
 
 class MainActivity : BaseVBActivity<ActivityMainBinding>() {
 
@@ -35,14 +35,13 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>() {
         super.onClick()
         mBinding?.apply {
             selectPhoto.vClick {
-                //判断是否需要所有文件权限
+                //判断是否需要所有文件权限  perform action when allow permission success
                 if (!(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R && !Environment.isExternalStorageManager())) {
                     //表明已经有这个权限了
                     pickerTakePhoto()
                 } else {
-                    // 获取权限
-                    val intent = Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION)
-                    startActivity(intent)
+                    // 获取权限 ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
+                    startActivity(mContext.getAppAllFilesPerIntent)
                 }
             }
         }
@@ -61,23 +60,24 @@ class MainActivity : BaseVBActivity<ActivityMainBinding>() {
     }
 
     fun pickerTakePhoto(
-            maxChooseCoun: Int = 1,
-            isForResult: Boolean = true,
-        ) {
-            //toPickerTakePhoto(this@MainActivity)
-            toPickerTakePhoto(this@MainActivity,
-                isCallResult = true) { requestCode: Int, perms: String ->
-                val photoPickerIntent: Intent = IntentBuilder(this)
-                    .cameraFileDir(takePhotoDir()) // 是否开启拍照
-                    .maxChooseCount(maxChooseCoun) // 图片选择张数的最大值
-                    .cropFileDir(cropPhotoDir()) // 是否开启裁剪
-                    .build()
-                if (isForResult) {
-                    startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
-                } else {
-                    startActivity(photoPickerIntent)
-                }
+        maxChooseCoun: Int = 1,
+        isForResult: Boolean = true,
+    ) {
+        //toPickerTakePhoto(this@MainActivity)
+        toPickerTakePhoto(
+            this@MainActivity,
+            isCallResult = true
+        ) { requestCode: Int, perms: String ->
+            val photoPickerIntent: Intent = IntentBuilder(this)
+                .cameraFileDir(takePhotoDir()) // 是否开启拍照
+                .maxChooseCount(maxChooseCoun) // 图片选择张数的最大值
+                .cropFileDir(cropPhotoDir()) // 是否开启裁剪
+                .build()
+            if (isForResult) {
+                startActivityForResult(photoPickerIntent, RC_CHOOSE_PHOTO)
+            } else {
+                startActivity(photoPickerIntent)
             }
+        }
     }
-
 }
