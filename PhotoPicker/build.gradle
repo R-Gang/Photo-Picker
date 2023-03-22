@@ -69,6 +69,9 @@ dependencies {
     implementation Dependencies.coil
     implementation Dependencies.Imageloader
 
+    // 一行代码快速实现Android动态权限申请
+    implementation Dependencies.permission
+
 }
 
 // 打包源码

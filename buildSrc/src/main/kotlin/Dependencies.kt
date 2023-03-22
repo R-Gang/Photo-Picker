@@ -11,7 +11,7 @@ import java.net.URI
  * App
  */
 object App {
-    const val applicationId = "com.gang.kotlin.photo"
+    const val applicationId = "com.gang.photo"
 }
 
 /**
@@ -57,17 +57,15 @@ object Support {
  * */
 object Dependencies {
 
-    const val AndroidCommon =
-        "com.github.R-Gang:Android-Common:v0.1.6-beta.13.0@aar" // 常用类(以上为基类关联依赖)
+    const val AndroidCommon = "com.github.R-Gang:Android-Common:v0.1.7-beta.01@aar" // 常用类(以上为基类关联依赖)
     const val RecyclerCommon = "com.github.R-Gang:Recycler-Common:v0.1.0-beta.0" // 视图列表扩展
-    const val OkhttpUtils = "com.github.R-Gang:Okhttp-Utils:v1.0.0-beta.6" // 网络请求框架
     const val toolsUtils = "com.github.R-Gang:Tools-Utils:v1.0.1-beta.3" // 实用工具类
     const val coil = "io.coil-kt:coil:2.2.0" // Coil图片加载框架
     const val Imageloader = "com.github.R-Gang:Image-loader:v1.0.0-beta.0" // Coil扩展工具
-
-    const val PhotoPicker = "com.github.R-Gang:Photo-Picker:v1.0.0-beta.0" // 图片选择器
+    const val PhotoPicker = "com.github.R-Gang:Photo-Picker:v1.0.0-beta.2" // 图片选择器
 
     const val logger = "com.orhanobut:logger:2.2.0" // 日志工具类 logger
+    const val permission = "com.github.dfqin:grantor:2.5" // 一行代码快速实现Android动态权限申请
 
     val addRepos: (handler: RepositoryHandler) -> Unit = {
         it.google()
